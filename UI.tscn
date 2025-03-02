@@ -1,0 +1,118 @@
+[gd_scene load_steps=6 format=3 uid="uid://bompq0764k8p5"]
+
+[ext_resource type="Script" path="res://ui.gd" id="1_uqsvj"]
+[ext_resource type="Texture2D" uid="uid://dl00tf55efygb" path="res://play-solid.svg" id="2_2c2by"]
+[ext_resource type="Texture2D" uid="uid://cxh73twc4ag2a" path="res://trash-solid.svg" id="3_c88qm"]
+[ext_resource type="Script" path="res://messages_container.gd" id="4_nbf3r"]
+[ext_resource type="Texture2D" uid="uid://boe2d0v6cjeks" path="res://icon.svg" id="5_vxj23"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_uqsvj")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 50
+
+[node name="Panel" type="Panel" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/Panel/MarginContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="ActionBar" type="HBoxContainer" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.06
+
+[node name="Run" type="TextureButton" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer/ActionBar"]
+custom_minimum_size = Vector2(28, 32)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture_normal = ExtResource("2_2c2by")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Clear" type="TextureButton" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer/ActionBar"]
+custom_minimum_size = Vector2(28, 32)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture_normal = ExtResource("3_c88qm")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CodeEditor" type="Panel" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextEdit" type="TextEdit" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer/CodeEditor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+wrap_mode = 1
+indent_wrapped_lines = true
+draw_tabs = true
+
+[node name="MessagesContainer" type="VBoxContainer" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_nbf3r")
+
+[node name="Info" type="Label" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer/MessagesContainer"]
+visible = false
+layout_mode = 2
+text = "Error"
+
+[node name="Error" type="Label" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer/MessagesContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.477854, 0.410057, 1)
+text = "Info"
+
+[node name="Container" type="Control" parent="HSplitContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LuaConsole" type="LuaConsole" parent="HSplitContainer/Container"]
+
+[node name="Icon" type="Sprite2D" parent="HSplitContainer"]
+position = Vector2(883, 323)
+texture = ExtResource("5_vxj23")
+
+[connection signal="pressed" from="HSplitContainer/Panel/MarginContainer/VBoxContainer/ActionBar/Run" to="." method="_on_run_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/Panel/MarginContainer/VBoxContainer/ActionBar/Clear" to="HSplitContainer/Panel/MarginContainer/VBoxContainer/MessagesContainer" method="_on_clear_pressed"]
